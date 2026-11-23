@@ -1,0 +1,161 @@
+# Segment-Definitionen für MSCONS (Metered Services Consumption Report)
+# Diese Datei enthält nur die Segmentnamen und leere Elementlisten.
+# Inhalte können später ergänzt werden.
+
+segments:
+  UNH:
+    description: "Message header"
+    role: header
+    required: true
+    min_repeat: 1
+    max_repeat: 1
+    elements:
+      - name: message_reference_number
+        required: true
+        min_length: 1
+        max_length: 14
+      - name: message_identifier
+        required: true
+        components:
+          - name: message_type
+            required: true
+            min_length: 1
+            max_length: 6
+          - name: version
+            required: true
+            min_length: 1
+            max_length: 3
+          - name: release
+            required: true
+            min_length: 1
+            max_length: 3
+          - name: controlling_agency
+            required: true
+            min_length: 1
+            max_length: 3
+
+  BGM:
+    description: "Beginning of message"
+    role: header
+    required: true
+    min_repeat: 1
+    max_repeat: 1
+    elements:
+      - name: message_name
+        required: true
+        components:
+          - name: message_function_code
+            required: true
+      - name: document_number
+        required: false
+      - name: message_function_code
+        required: false
+
+  DTM:
+    description: "Date/time/period"
+    role: header
+    required: true
+    multiple: true
+    min_repeat: 1
+    max_repeat: 99
+    elements:
+      - name: date_time_period
+        required: true
+        components:
+          - name: qualifier
+            required: true
+            min_length: 3
+            max_length: 3
+          - name: value
+            required: true
+            min_length: 1
+            max_length: 35
+          - name: format
+            required: false
+
+  NAD:
+    description: "Name and address"
+    role: body
+    required: true
+    min_repeat: 1
+    max_repeat: 99
+    elements:
+      - name: party_qualifier
+        required: true
+        min_length: 2
+        max_length: 3
+      - name: party_identification
+        required: false
+        components:
+          - name: party_id
+            required: false
+          - name: code_list_agency
+            required: false
+          - name: code_list_agency_code
+            required: false
+
+  RFF:
+    description: "Reference"
+    role: body
+    min_repeat: 0
+    max_repeat: 99
+    elements:
+      - name: reference
+        required: true
+        components:
+          - name: qualifier
+            required: true
+            min_length: 2
+            max_length: 3
+          - name: reference_number
+            required: false
+
+  MEA:
+    description: "Measurements"
+    role: body
+    required: true
+    min_repeat: 1
+    max_repeat: 99
+    elements:
+      - name: measurement_purpose
+        required: true
+      - name: measurement_details
+        required: true
+        components:
+          - name: measurement_unit
+            required: true
+          - name: value
+            required: true
+
+  QTY:
+    description: "Quantity"
+    role: body
+    required: true
+    min_repeat: 1
+    max_repeat: 99
+    elements:
+      - name: quantity_details
+        required: true
+        components:
+          - name: qualifier
+            required: true
+          - name: quantity
+            required: true
+          - name: unit
+            required: false
+
+  UNT:
+    description: "Message trailer"
+    role: trailer
+    required: true
+    min_repeat: 1
+    max_repeat: 1
+    elements:
+      - name: segment_count
+        required: true
+        min_length: 1
+        max_length: 10
+      - name: message_reference_number
+        required: true
+        min_length: 1
+        max_length: 14

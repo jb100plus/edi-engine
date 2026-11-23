@@ -1,0 +1,14 @@
+MSCONS:
+  fsm: fsm_mscons.yaml
+  segments: segments_mscons.yaml
+  actions: edifact.engine.actions.actions_generic.GenericActions
+
+UTILMD:
+  fsm: fsm_utilmd.yaml
+  segments: segments_utilmd.yaml
+  actions: edifact.engine.actions.actions_generic.GenericActions
+
+INVOIC:
+  fsm: fsm_invoic.yaml
+  segments: segments_invoic.yaml
+  actions: edifact.engine.actions.actions_generic.GenericActions

@@ -1,0 +1,43 @@
+# FSM für MSCONS (Metered Services Consumption Report)
+# Universelle EDIFACT-FSM
+
+states:
+  START:
+    on:
+      UNH:
+        target: READ_SEGMENT
+        actions:
+          - init_message
+          - store_segment
+      EOF:
+        target: END
+        actions:
+          - handle_premature_end
+
+  READ_SEGMENT:
+    on:
+      UNT:
+        target: END
+        actions:
+          - store_segment
+          - finalize_message
+      EOF:
+        target: END
+        actions:
+          - handle_premature_end
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - store_segment
+
+  END:
+    terminal: true
+
+errors:
+  unexpected_segment:
+    message: "Unexpected segment in this state"
+    action: handle_unexpected_segment
+
+  premature_end:
+    message: "Message ended before UNT"
+    action: handle_premature_end

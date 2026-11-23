@@ -1,0 +1,16 @@
+digraph FSM {
+  rankdir=LR;
+  node [shape=box, style=filled, fontname="Arial"];
+  START [fillcolor="#FFF2CC"];
+  READ_UNH [fillcolor="#D9E1F2"];
+  READ_BGM [fillcolor="#D9E1F2"];
+  READ_DTM [fillcolor="#D9E1F2"];
+  READ_NAD [fillcolor="#D9E1F2"];
+  READ_RFF [fillcolor="#D9E1F2"];
+  READ_MEA [fillcolor="#D9E1F2"];
+  READ_QTY [fillcolor="#D9E1F2"];
+  READ_SEGMENT [fillcolor="#D9E1F2"];
+  READ_ELEMENT [fillcolor="#D9E1F2"];
+  READ_UNT [fillcolor="#D9E1F2"];
+  END [shape=doublecircle, fillcolor="#C6EFCE"];
+}

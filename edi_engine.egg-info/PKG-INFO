@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: edi-engine
+Version: 0.1.0
+Summary: EDIFACT parsing engine
+Requires-Python: >=3.10

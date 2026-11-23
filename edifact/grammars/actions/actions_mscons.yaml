@@ -1,0 +1,84 @@
+# Actions für MSCONS (Metered Services Consumption Report)
+# Diese Datei definiert nur die Action-Namen und optionale Beschreibungen.
+# Die Implementierung erfolgt in der Engine.
+
+actions:
+
+  # Nachricht initialisieren
+  init_message:
+    description: "Initialisiert die interne Datenstruktur für MSCONS"
+    params: []
+
+  # UNH verarbeiten
+  parse_unh:
+    description: "Parst das UNH-Segment"
+    params: []
+
+  # BGM verarbeiten
+  parse_bgm:
+    description: "Parst das BGM-Segment"
+    params: []
+
+  # DTM verarbeiten
+  parse_dtm:
+    description: "Parst das DTM-Segment"
+    params: []
+
+  # NAD verarbeiten
+  parse_nad:
+    description: "Parst das NAD-Segment"
+    params: []
+
+  # RFF verarbeiten
+  parse_rff:
+    description: "Parst das RFF-Segment"
+    params: []
+
+  # MEA verarbeiten
+  parse_mea:
+    description: "Parst das MEA-Segment"
+    params: []
+
+  # QTY verarbeiten
+  parse_qty:
+    description: "Parst das QTY-Segment"
+    params: []
+
+  # Generische Segment-Aktionen
+  start_segment:
+    description: "Startet ein neues Segment"
+    params: []
+
+  next_segment:
+    description: "Beendet das aktuelle Segment und startet das nächste"
+    params: []
+
+  parse_element:
+    description: "Parst ein einzelnes Datenelement"
+    params: []
+
+  finalize_element:
+    description: "Schließt ein Datenelement ab"
+    params: []
+
+  # UNT verarbeiten
+  parse_unt:
+    description: "Parst das UNT-Segment"
+    params: []
+
+  finalize_message:
+    description: "Schließt die MSCONS-Nachricht ab"
+    params: []
+
+  # Fehlerbehandlung
+  handle_unexpected_segment:
+    description: "Behandelt ein unerwartetes Segment"
+    params: []
+
+  handle_invalid_element:
+    description: "Behandelt ein ungültiges Datenelement"
+    params: []
+
+  handle_premature_end:
+    description: "Behandelt ein vorzeitiges Nachrichtenende"
+    params: []

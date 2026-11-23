@@ -1,0 +1,52 @@
+digraph MSCONS_FSM {
+    rankdir=LR;
+    node [shape=box, fontsize=12];
+
+    START;
+    READ_UNH;
+    READ_BGM;
+    READ_DTM;
+    READ_NAD;
+    READ_RFF;
+    READ_MEA;
+    READ_QTY;
+    READ_SEGMENT;
+    READ_ELEMENT;
+    READ_UNT;
+    END [shape=doublecircle];
+
+    START -> READ_UNH [label="UNH"];
+
+    READ_UNH -> READ_UNH [label="UNH"];
+    READ_UNH -> READ_BGM [label="BGM"];
+    READ_UNH -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_BGM -> READ_DTM [label="DTM"];
+    READ_BGM -> READ_NAD [label="NAD"];
+    READ_BGM -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_DTM -> READ_NAD [label="NAD"];
+    READ_DTM -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_NAD -> READ_RFF [label="RFF"];
+    READ_NAD -> READ_MEA [label="MEA"];
+    READ_NAD -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_RFF -> READ_MEA [label="MEA"];
+    READ_RFF -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_MEA -> READ_QTY [label="QTY"];
+    READ_MEA -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_QTY -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_SEGMENT -> READ_ELEMENT [label="DATENELEMENT"];
+    READ_SEGMENT -> READ_UNT [label="UNT"];
+    READ_SEGMENT -> READ_SEGMENT [label="SEGMENT"];
+
+    READ_ELEMENT -> READ_ELEMENT [label="DATENELEMENT"];
+    READ_ELEMENT -> READ_SEGMENT [label="SEGMENT"];
+    READ_ELEMENT -> READ_UNT [label="UNT"];
+
+    READ_UNT -> END [label="END"];
+}

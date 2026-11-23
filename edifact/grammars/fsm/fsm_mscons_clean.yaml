@@ -1,0 +1,153 @@
+# FSM für MSCONS (Metered Services Consumption Report)
+# Universelle EDIFACT-FSM, erweitert um MSCONS-relevante Segmente
+
+states:
+
+  START:
+    on:
+      UNH:
+        target: READ_UNH
+        actions:
+          - init_message
+          - parse_unh
+
+  READ_UNH:
+    on:
+      UNH:
+        target: READ_UNH
+        actions:
+          - parse_unh   # optional
+      BGM:
+        target: READ_BGM
+        actions:
+          - parse_bgm
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - start_segment
+
+  READ_BGM:
+    on:
+      DTM:
+        target: READ_DTM
+        actions:
+          - parse_dtm
+      NAD:
+        target: READ_NAD
+        actions:
+          - parse_nad
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_DTM:
+    on:
+      NAD:
+        target: READ_NAD
+        actions:
+          - parse_nad
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_NAD:
+    on:
+      RFF:
+        target: READ_RFF
+        actions:
+          - parse_rff
+      MEA:
+        target: READ_MEA
+        actions:
+          - parse_mea
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_RFF:
+    on:
+      MEA:
+        target: READ_MEA
+        actions:
+          - parse_mea
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_MEA:
+    on:
+      QTY:
+        target: READ_QTY
+        actions:
+          - parse_qty
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_QTY:
+    on:
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_SEGMENT:
+    on:
+      DATENELEMENT:
+        target: READ_ELEMENT
+        actions:
+          - parse_element
+      UNT:
+        target: READ_UNT
+        actions:
+          - parse_unt
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - next_segment
+
+  READ_ELEMENT:
+    on:
+      DATENELEMENT:
+        target: READ_ELEMENT
+        actions:
+          - parse_element
+      SEGMENT:
+        target: READ_SEGMENT
+        actions:
+          - finalize_element
+          - start_segment
+      UNT:
+        target: READ_UNT
+        actions:
+          - finalize_element
+          - parse_unt
+
+  READ_UNT:
+    on:
+      END:
+        target: END
+        actions:
+          - finalize_message
+
+  END:
+    terminal: true
+
+
+errors:
+  unexpected_segment:
+    message: "Unexpected segment in this state"
+    action: handle_unexpected_segment
+
+  invalid_element:
+    message: "Invalid data element encountered"
+    action: handle_invalid_element
+
+  premature_end:
+    message: "Message ended before UNT"
+    action: handle_premature_end
