@@ -25,7 +25,8 @@ class GenericActions:
         segments_def = self.ctx.get("segments_def", {}).get("segments", {})
         definition = segments_def.get(tag, {})
         role = definition.get("role", "body")
-        multiple = definition.get("multiple", False)
+        max_repeat = int(definition.get("max_repeat", 1))
+        multiple = max_repeat > 1 or bool(definition.get("multiple", False))
 
         if role == "header":
             target = self.ctx["message"]["header"]

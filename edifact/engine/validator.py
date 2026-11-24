@@ -82,12 +82,11 @@ class SegmentValidator:
 
     def validate_required_segments(self):
         for tag, definition in self.definitions.items():
-            if not self._is_true(definition.get("required")):
+            min_repeat = int(definition.get("min_repeat", 0))
+            if min_repeat == 0:
                 continue
 
             count = self.counts.get(tag, 0)
-            min_repeat = int(definition.get("min_repeat", 1))
-
             if count < min_repeat:
                 raise ValueError(
                     f"Pflichtsegment '{tag}' fehlt oder wurde zu selten wiederholt"

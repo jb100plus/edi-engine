@@ -50,13 +50,50 @@ class EdifactEngine:
 
         return fsm, context
 
+    def _split_segments(self, text):
+        """Teilt einen EDIFACT-Segmentstrom auf, auch wenn keine Zeilenumbrüche vorhanden sind."""
+        segments = []
+        start = 0
+
+        for index, char in enumerate(text):
+            if char == "'" and (index == 0 or text[index - 1] != "?"):
+                segment = text[start:index].strip()
+                if segment:
+                    segments.append(segment)
+                start = index + 1
+
+        remainder = text[start:].strip()
+        if remainder:
+            segments.append(remainder)
+
+        return segments
+
+    def _normalize_segments(self, lines):
+        segments = []
+        for line in lines:
+            segments.extend(self._split_segments(line))
+
+        try:
+            unh_index = next(
+                index for index, segment in enumerate(segments)
+                if segment.startswith("UNH")
+            )
+        except StopIteration:
+            return []
+
+        for index in range(unh_index + 1, len(segments)):
+            if segments[index].startswith("UNT"):
+                return segments[unh_index:index + 1]
+
+        return segments[unh_index:]
+
     # ---------------------------------------------------------
     # Hauptmethode
     # ---------------------------------------------------------
 
     def process_message(self, lines):
         """Verarbeitet eine EDIFACT-Nachricht vollständig."""
-        lines = self._materialize(lines)
+        lines = self._normalize_segments(self._materialize(lines))
 
         # Nachrichtentyp bestimmen
         message_type = self._detect_message_type(lines)

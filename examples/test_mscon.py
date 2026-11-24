@@ -6,7 +6,8 @@ BASE_PATH = Path(__file__).resolve().parents[1] / "edifact" / "grammars"
 
 def main():
     # Datei einlesen
-    edi_path = Path(__file__).resolve().parent / "mscons_sample.edi"
+    #edi_path = Path(__file__).resolve().parent / "mscons_sample.edi"
+    edi_path = Path(__file__).resolve().parent / "bhkw.edi"
     lines = edi_path.read_text(encoding="utf-8").splitlines()
 
     # Engine bauen

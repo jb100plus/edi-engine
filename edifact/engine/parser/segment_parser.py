@@ -33,8 +33,8 @@ class SegmentParser:
         if line.endswith(self.segment_terminator):
             line = line[:-1]
 
-        # Split in Tag + Elemente
-        parts = line.split(self.element_separator)
+        # Split in Tag + Elemente; escaped + bleibt Dateninhalt
+        parts = self._split_unescaped(line, self.element_separator)
         tag = parts[0]
         elements = parts[1:]
 
@@ -49,3 +49,15 @@ class SegmentParser:
             "tag": tag,
             "elements": parsed_elements
         }
+
+    def _split_unescaped(self, text, separator):
+        parts = []
+        start = 0
+
+        for index, char in enumerate(text):
+            if char == separator and (index == 0 or text[index - 1] != "?"):
+                parts.append(text[start:index])
+                start = index + 1
+
+        parts.append(text[start:])
+        return parts

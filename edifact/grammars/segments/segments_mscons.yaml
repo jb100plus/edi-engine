@@ -6,7 +6,6 @@ segments:
   UNH:
     description: "Message header"
     role: header
-    required: true
     min_repeat: 1
     max_repeat: 1
     elements:
@@ -37,7 +36,6 @@ segments:
   BGM:
     description: "Beginning of message"
     role: header
-    required: true
     min_repeat: 1
     max_repeat: 1
     elements:
@@ -54,10 +52,8 @@ segments:
   DTM:
     description: "Date/time/period"
     role: header
-    required: true
-    multiple: true
     min_repeat: 1
-    max_repeat: 99
+    max_repeat: 9999
     elements:
       - name: date_time_period
         required: true
@@ -76,7 +72,6 @@ segments:
   NAD:
     description: "Name and address"
     role: body
-    required: true
     min_repeat: 1
     max_repeat: 99
     elements:
@@ -113,26 +108,14 @@ segments:
   MEA:
     description: "Measurements"
     role: body
-    required: true
-    min_repeat: 1
+    min_repeat: 0
     max_repeat: 99
-    elements:
-      - name: measurement_purpose
-        required: true
-      - name: measurement_details
-        required: true
-        components:
-          - name: measurement_unit
-            required: true
-          - name: value
-            required: true
 
   QTY:
     description: "Quantity"
     role: body
-    required: true
     min_repeat: 1
-    max_repeat: 99
+    max_repeat: 9999
     elements:
       - name: quantity_details
         required: true
@@ -147,7 +130,6 @@ segments:
   UNT:
     description: "Message trailer"
     role: trailer
-    required: true
     min_repeat: 1
     max_repeat: 1
     elements:
